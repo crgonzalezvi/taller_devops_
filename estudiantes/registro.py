@@ -17,6 +17,7 @@ def cargar_estudiantes(nombre_archivo):
                 continue
     return estudiantes
 
+
 def mostrar_tabla(estudiantes):
     estudiantes_ordenados = sorted(estudiantes, key=lambda x: x[0])
     print(f"{'Nombre':<20} | {'Nota'}")
