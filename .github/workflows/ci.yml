@@ -1,0 +1,29 @@
+name: CI - Validar aplicación de estudiantes
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  run-python:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Instalar dependencias (si hubiera)
+      run: pip install -r requirements.txt || true
+
+    - name: Ejecutar aplicación
+      run: python main.py
+
+    - name: Validar formato con flake8
+      run: |
+        pip install flake8
+        flake8 .
