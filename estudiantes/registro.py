@@ -17,7 +17,6 @@ def cargar_estudiantes(nombre_archivo):
                 continue
     return estudiantes
 
-
 def mostrar_tabla(estudiantes):
     estudiantes_ordenados = sorted(estudiantes, key=lambda x: x[0])
     print(f"{'Nombre':<20} | {'Nota'}")
@@ -31,4 +30,3 @@ def calcular_promedio(estudiantes):
         return 0.0
     total = sum(nota for _, nota in estudiantes)
     return total / len(estudiantes)
-
