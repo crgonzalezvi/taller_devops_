@@ -1,29 +1,34 @@
 import csv
-def cargar_estudiantes(ruta_archivo):
-    estudiantes_validos = []
-    with open(ruta_archivo, newline='', encoding='utf-8') as csvfile:
-        lector = csv.DictReader(csvfile)
+
+
+def cargar_estudiantes(nombre_archivo):
+    estudiantes = []
+    with open(nombre_archivo, newline='', encoding='utf-8') as csvfile:
+        lector = csv.reader(csvfile)
         for fila in lector:
-            nombre = fila['nombre'].strip()
+            if len(fila) != 2:
+                continue
+            nombre, nota_str = fila
             try:
-                nota = float(fila['nota'])
+                nota = float(nota_str)
                 if 0.0 <= nota <= 5.0:
-                    estudiantes_validos.append({'nombre': nombre, 'nota': nota})
-                else:
-                    print(f"Nota fuera de rango para {nombre}: {nota}")
+                    estudiantes.append((nombre.strip(), nota))
             except ValueError:
-                print(f"Nota inválida para {nombre}: {fila['nota']}")
-    return estudiantes_validos
-def mostrar_tabla_estudiantes(estudiantes):
-    estudiantes_ordenados = sorted(estudiantes, key=lambda x: x['nombre'])
-    print(f"{'Nombre':<20} {'Nota':>5}")
-    print("-" * 26)
-    for est in estudiantes_ordenados:
-        print(f"{est['nombre']:<20} {est['nota']:>5.2f}")
+                continue
+    return estudiantes
+
+
+def mostrar_tabla(estudiantes):
+    estudiantes_ordenados = sorted(estudiantes, key=lambda x: x[0])
+    print(f"{'Nombre':<20} | {'Nota'}")
+    print("-" * 30)
+    for nombre, nota in estudiantes_ordenados:
+        print(f"{nombre:<20} | {nota}")
+
+
 def calcular_promedio(estudiantes):
     if not estudiantes:
-        print("No hay estudiantes válidos para calcular el promedio.")
-        return
-    suma = sum(est['nota'] for est in estudiantes)
-    promedio = suma / len(estudiantes)
-    print(f"\nPromedio general de notas: {promedio:.2f}")
+        return 0.0
+    total = sum(nota for _, nota in estudiantes)
+    return total / len(estudiantes)
+
