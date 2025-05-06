@@ -17,3 +17,12 @@ def cargar_estudiantes(ruta_archivo):
                 print(f"Nota inválida para {nombre}: {fila['nota']}")
 
     return estudiantes_validos
+
+
+def mostrar_tabla_estudiantes(estudiantes):
+    estudiantes_ordenados = sorted(estudiantes, key=lambda x: x['nombre'])
+    
+    print(f"{'Nombre':<20} {'Nota':>5}")
+    print("-" * 26)
+    for est in estudiantes_ordenados:
+        print(f"{est['nombre']:<20} {est['nota']:>5.2f}")
